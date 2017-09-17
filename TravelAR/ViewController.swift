@@ -11,13 +11,15 @@ import SceneKit
 import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
-
+    
     @IBOutlet var sceneView: ARSCNView!
+    let bubbleDepth : Float = 0.03 // the 'depth' of 3D text
+    var flightData:[FlightData] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the view's delegate
+         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
@@ -28,6 +30,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        addNodes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,20 +39,84 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
+        
         // Run the view's session
         sceneView.session.run(configuration)
     }
     
-    func addNode() {
+    func addNodes() {
         
-//        //let zCoords = randomFloat(min: -2, max: -0.2)
-//        let cubeNode = SCNNode(geometry: SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0))
-//     //   cubeNode.
-//    //    let cc = getCameraCoordinates(sceneView: sceneView)
-//        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
-//        sceneView.scene.rootNode.addChildNode(cubeNode)
+        //let zCoords = randomFloat(min: -2, max: -0.2)
+        //        let cubeNode = SCNNode(geometry: SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0))
+        //        let cc = getCameraCoordinates(sceneView: sceneView)
+        //        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
+        //        sceneView.scene.rootNode.addChildNode(cubeNode)
+        //
         
+        let startNode = createNewBubbleParentNode("Start City")
+        let endNode = createNewBubbleParentNode("End City")
+        startNode.position = SCNVector3(0, 0, 0)
+        endNode.position = SCNVector3(0, 0, -1.2)
+        sceneView.scene.rootNode.addChildNode(startNode)
+        sceneView.scene.rootNode.addChildNode(endNode)
+    }
+    
+    struct CameraCoordinates{
+        var x = Float()
+        var y = Float()
+        var z = Float()
+    }
+    
+    func getCameraCoordinates(sceneView: ARSCNView) -> CameraCoordinates{
+        let cameraTransform = sceneView.session.currentFrame?.camera.transform
+        let cameraCoordinates = MDLTransform(matrix : cameraTransform!)
+        
+        var cc = CameraCoordinates()
+        cc.x = cameraCoordinates.translation.x
+        cc.y = cameraCoordinates.translation.y
+        cc.z = cameraCoordinates.translation.z
+        
+        return cc
+    }
+    
+    func createNewBubbleParentNode(_ text : String) -> SCNNode {
+        
+        // TEXT BILLBOARD CONSTRAINT
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        
+        // BUBBLE-TEXT
+        let bubble = SCNText(string: text, extrusionDepth: CGFloat(bubbleDepth))
+        var font = UIFont(name: "Futura", size: 0.15)
+        font = font?.withTraits(traits: .traitBold)
+        bubble.font = font
+        bubble.alignmentMode = kCAAlignmentCenter
+        bubble.firstMaterial?.diffuse.contents = UIColor.orange
+        bubble.firstMaterial?.specular.contents = UIColor.white
+        bubble.firstMaterial?.isDoubleSided = true
+        // bubble.flatness // setting this too low can cause crashes.
+        bubble.chamferRadius = CGFloat(bubbleDepth)
+        
+        // BUBBLE NODE
+        let (minBound, maxBound) = bubble.boundingBox
+        let bubbleNode = SCNNode(geometry: bubble)
+        // Centre Node - to Centre-Bottom point
+        bubbleNode.pivot = SCNMatrix4MakeTranslation( (maxBound.x - minBound.x)/2, minBound.y, bubbleDepth/2)
+        // Reduce default text size
+        bubbleNode.scale = SCNVector3Make(0.6, 0.6, 0.6)
+        
+        // CENTRE POINT NODE
+        let sphere = SCNSphere(radius: 0.02)
+        sphere.firstMaterial?.diffuse.contents = UIColor.cyan
+        let sphereNode = SCNNode(geometry: sphere)
+        
+        // BUBBLE PARENT NODE
+        let bubbleNodeParent = SCNNode()
+        bubbleNodeParent.addChildNode(bubbleNode)
+        bubbleNodeParent.addChildNode(sphereNode)
+        bubbleNodeParent.constraints = [billboardConstraint]
+        
+        return bubbleNodeParent
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,17 +130,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
+    /*
+     // Override to create and configure nodes for anchors added to the view's session.
+     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+     let node = SCNNode()
      
-        return node
-    }
-*/
+     return node
+     }
+     */
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -89,3 +157,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
 }
+
+extension UIFont {
+    func withTraits(traits:UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = self.fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
+        return UIFont(descriptor: descriptor!, size: 0)
+    }
+}
+

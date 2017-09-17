@@ -8,7 +8,7 @@
 
 import UIKit
 
-class searchInfoVC: UIViewController {
+class SearchViewController: UIViewController {
     
     @IBOutlet weak var originText: UITextField!
     @IBOutlet weak var destinationText: UITextField!
@@ -17,46 +17,27 @@ class searchInfoVC: UIViewController {
     
     let AMADEUS_KEY = "Ph9ScLKVlkZuwZMoVOVo1nGPieUDU8If"
     var flightData:[FlightData] = []
-    var activityind = UIActivityIndicatorView()
     
-    
+    // Submit button press
     @IBAction func submitPressed(_ sender: Any) {
-        
-        if originText.text! == "" || destinationText.text! == "" || departDate.text! == "" || arrivalDate.text! == "" {
-            createAlert(title: "At least one of the fields is empty", message: "Please fill in all the information!")
-        }
-        
-        // Begin ignoring interactions
-//        self.activityind = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-//        self.activityind.center = self.view.center
-//        self.activityind.hidesWhenStopped = true
-//        self.activityind.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-//        self.activityind.startAnimating()
-//        self.view.addSubview(self.activityind)
-//        UIApplication.shared.beginIgnoringInteractionEvents()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
-            // Put your code which should be executed with a delay here
-            self.sendRequest(origin: self.originText.text!, destination: self.destinationText.text!, departDate: self.departDate.text!)
-        })
-        
-        
+        sendRequest(origin: originText.text!, destination: destinationText.text!, departDate: departDate.text!)
+        self.performSegue(withIdentifier: "goToAR", sender: self)
     }
     
+    // Send flightData array to ARVIew
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAR" {
-            if let destVC = segue.destination as? ViewController {
-                destVC.flightData = flightData
-            }
+//            let destinationVC = segue.destination as View
+//            destinationVC.
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -78,11 +59,10 @@ class searchInfoVC: UIViewController {
                 return
             }
             let json = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-            
-            guard let res = json!["results"] as? NSArray else { print ("results failed \n \(json!)") ; return }
-            
-            let count = min(res.count, 10)
-            for i in 0..<count {
+
+            guard let res = json!["results"] as? NSArray else { return }
+            print(res.count)
+            for i in 0..<10 {
                 guard let result = res[i] as? NSDictionary else { print ("failed"); return }
                 guard let fare = result["fare"] as? NSDictionary else { print ("failed fare"); return }
                 guard let itinerary = result["itineraries"] as? NSArray else { print ("failed itinerary"); return }
@@ -99,7 +79,7 @@ class searchInfoVC: UIViewController {
                 
                 guard let operating_airline = flights1["operating_airline"] as? String else { print ("failed operating airline"); return}
                 
-                guard let totalPrice = fare["total_price"] as? String else { print ("failed total price"); return}
+                guard let totalPrice = fare["total_price"] as? String else {            print ("failed total price"); return}
                 
                 guard let PPA = fare["price_per_adult"] as? NSDictionary else { print ("failed PPA"); return}
                 
@@ -108,37 +88,18 @@ class searchInfoVC: UIViewController {
                 guard let ppa_total = PPA["total_fare"] as? String else { print("failed ppa_total"); return}
                 
                 
-                self.flightData.append(FlightData(fn: aircraft + operating_airline, fd: depart_at, ftp: totalPrice, fpp: ppa_total, ft: ppa_tax, fde: destination, frg: origin, fdt: destination, frgt: origin))
+                self.flightData.append(FlightData(fn: aircraft + " " + operating_airline, fd: depart_at, ftp: totalPrice, fpp: ppa_total, ft: ppa_tax, fde: destination, frg: origin, fdt: destination, frgt: origin))
             }
+            
         }
-//        if self.activityind.isAnimating{
-//
-//            DispatchQueue.main.sync(){
-//
-//                print("it's animating")
-//                self.activityind.stopAnimating()
-//                UIApplication.shared.endIgnoringInteractionEvents()
-//                self.performSegue(withIdentifier: "goToAR", sender: self)
-//            }
-//        }
         task.resume()
         return
     }
     
-    
-    func createAlert(title: String, message :String){
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: {
-            (action) in
-            
-            alert.dismiss(animated: true, completion: nil)
-            
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
+    @IBAction func travel_Info(_ sender: UIButton)
+    {
+        sendRequest(origin: "BOS", destination: "ORD", departDate: "2017-09-17")
     }
-    
-    
+ 
+
 }
