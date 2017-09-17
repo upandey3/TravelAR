@@ -37,7 +37,7 @@ class searchInfoVC: UIViewController {
         
         self.sendRequest(origin: self.originText.text!, destination: self.destinationText.text!, departDate: self.departDate.text!)
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(6), execute: {
             // Put your code which should be executed with a delay here
             self.performSegue(withIdentifier: "goToAR", sender: self)
             if self.activityind.isAnimating{

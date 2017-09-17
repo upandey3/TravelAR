@@ -97,7 +97,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="0.70604093310000005" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BV1-FR-VrT" kind="show" identifier="goToAR" id="g3U-XF-FbH"/>
+                                    <action selector="submitPressed:" destination="7jG-Qe-c2f" eventType="touchUpInside" id="Sbx-Qd-gDP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -133,7 +133,11 @@
                         <viewLayoutGuide key="safeArea" id="Q58-wz-sMQ"/>
                     </view>
                     <connections>
+                        <outlet property="arrivalDate" destination="c8E-mV-qaW" id="bla-EV-WNG"/>
+                        <outlet property="departDate" destination="Y9c-8v-RJd" id="Idw-Jc-vqe"/>
+                        <outlet property="destinationText" destination="qPc-l2-cfX" id="qCd-ch-XSz"/>
                         <outlet property="originText" destination="hdP-lM-bB4" id="8R5-4k-DCR"/>
+                        <segue destination="BV1-FR-VrT" kind="show" identifier="goToAR" id="End-S3-4YD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIL-ry-36w" userLabel="First Responder" sceneMemberID="firstResponder"/>

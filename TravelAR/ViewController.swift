@@ -32,9 +32,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
         print("Count is \(flightData.count)")
         addEndPointNodes()
-        let edgeNode = SCNNode(geometry: SCNBox(width: 0.01, height: 0.01, length: 1.2, chamferRadius: 0))
-        edgeNode.position = SCNVector3(0, 0, -0.6)
-        sceneView.scene.rootNode.addChildNode(edgeNode)
+        addEdges()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,14 +54,80 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
         //        sceneView.scene.rootNode.addChildNode(cubeNode)
         //
+        if flightData.count == 0 {
+            print ("Count is zero"); return
+        }
         let orgCity = flightData[0].flightOrig
         let destCity = flightData[0].flightDest
         let startNode = createNewBubbleParentNode("Start City: " + orgCity)
         let endNode = createNewBubbleParentNode("End City:" + destCity)
-        startNode.position = SCNVector3(0, 0, 0)
-        endNode.position = SCNVector3(0, 0, -1.2)
+        startNode.position = SCNVector3(-0.6, 0, 0)
+        endNode.position = SCNVector3(0.6, 0, 0)
         sceneView.scene.rootNode.addChildNode(startNode)
         sceneView.scene.rootNode.addChildNode(endNode)
+    }
+    
+    func addEdges(){
+        
+        if flightData.count == 0 {
+            print ("Count is zero"); return
+        }
+        
+//        let edgeMultiplier = 2
+        
+        for i in 0..<5{
+            let fName = flightData[i].flightName
+            let fPrice = flightData[i].flightTotalPrice
+            let edgeBox = SCNBox(width: 1.2, height: 0.01, length: 0.01, chamferRadius: 0)
+            if i == 0 {
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.blue
+            } else if i == 1 {
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.green
+            }
+            else if i == 2{
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.yellow
+            }
+            else if i == 3 {
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.purple
+            }
+            else if i == 4 {
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.red
+            }
+ 
+            
+            let edgeNode = SCNNode(geometry: edgeBox)
+            edgeNode.position = SCNVector3(0, 0, Double(i)/5)
+            let priceNode = createNewBubbleParentNode(fPrice)
+            let nameNode = createNewBubbleParentNode(fName)
+            priceNode.position = SCNVector3(0, 0.05, Double(i)/5)
+            edgeNode.addChildNode(priceNode)
+            nameNode.position = SCNVector3(0, 0.15, Double(i)/5)
+            edgeNode.addChildNode(nameNode)
+            sceneView.scene.rootNode.addChildNode(edgeNode)
+        }
+        
+        
+        
+
+//        // Define a 2D path for the parabola
+//        let path = UIBezierPath()
+//        path.move(to: CGPoint(x: 0, y: 0))
+//        path.addQuadCurve(to: CGPoint(x: 10, y: 0), controlPoint: CGPoint(x: 5.0, y: 20.0))
+//        path.addLine(to: CGPoint(x: 9.9, y: 0))
+//        path.addQuadCurve(to: CGPoint(x: 0.1, y: 0), controlPoint: CGPoint(x: 5.0, y: 19.8))
+//
+//        // Tweak for a smoother shape (lower is smoother)
+//        path.flatness = 0.25
+//
+//        // Make a 3D extruded shape from the path
+//        let shape = SCNShape(path: path, extrusionDepth: 10)
+//        shape.firstMaterial?.diffuse.contents = UIColor.blue
+//
+//        // And place it in the scene
+//        let shapeNode = SCNNode(geometry: shape)
+//        shapeNode.pivot = SCNMatrix4MakeTranslation(50, 0, 0)
+//        shapeNode.eulerAngles.y = Float(-Double.pi/4)
+//        sceneView.scene.rootNode.addChildNode(shapeNode)
     }
     
     struct CameraCoordinates{
@@ -107,10 +172,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Centre Node - to Centre-Bottom point
         bubbleNode.pivot = SCNMatrix4MakeTranslation( (maxBound.x - minBound.x)/2, minBound.y, bubbleDepth/2)
         // Reduce default text size
-        bubbleNode.scale = SCNVector3Make(0.6, 0.6, 0.6)
+        bubbleNode.scale = SCNVector3Make(0.3, 0.3, 0.3)
         
         // CENTRE POINT NODE
-        let sphere = SCNSphere(radius: 0.02)
+        let sphere = SCNSphere(radius: 0.01)
         sphere.firstMaterial?.diffuse.contents = UIColor.cyan
         let sphereNode = SCNNode(geometry: sphere)
         
@@ -134,17 +199,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-    
-    // MARK: - ARSCNViewDelegate
-    
-    /*
-     // Override to create and configure nodes for anchors added to the view's session.
-     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-     let node = SCNNode()
-     
-     return node
-     }
-     */
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
