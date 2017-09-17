@@ -84,6 +84,7 @@
                         <outlet property="departDate" destination="0lr-b7-RrC" id="xgg-Kh-hWq"/>
                         <outlet property="destinationText" destination="aRz-I2-L5D" id="iij-Ql-2f4"/>
                         <outlet property="originText" destination="hdP-lM-bB4" id="8R5-4k-DCR"/>
+                        <segue destination="BV1-FR-VrT" kind="show" identifier="goToAR" id="Nzb-3U-tDt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIL-ry-36w" userLabel="First Responder" sceneMemberID="firstResponder"/>

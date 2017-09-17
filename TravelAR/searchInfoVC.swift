@@ -27,19 +27,26 @@ class searchInfoVC: UIViewController {
         }
         
         // Begin ignoring interactions
-//        self.activityind = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-//        self.activityind.center = self.view.center
-//        self.activityind.hidesWhenStopped = true
-//        self.activityind.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-//        self.activityind.startAnimating()
-//        self.view.addSubview(self.activityind)
-//        UIApplication.shared.beginIgnoringInteractionEvents()
+        self.activityind = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        self.activityind.center = self.view.center
+        self.activityind.hidesWhenStopped = true
+        self.activityind.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        self.activityind.startAnimating()
+        self.view.addSubview(self.activityind)
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
+        self.sendRequest(origin: self.originText.text!, destination: self.destinationText.text!, departDate: self.departDate.text!)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
             // Put your code which should be executed with a delay here
-            self.sendRequest(origin: self.originText.text!, destination: self.destinationText.text!, departDate: self.departDate.text!)
+            self.performSegue(withIdentifier: "goToAR", sender: self)
+            if self.activityind.isAnimating{
+                print("it's animating")
+                self.activityind.stopAnimating()
+                UIApplication.shared.endIgnoringInteractionEvents()
+                self.performSegue(withIdentifier: "goToAR", sender: self)
+            }
         })
-        
         
     }
     
@@ -108,19 +115,9 @@ class searchInfoVC: UIViewController {
                 guard let ppa_total = PPA["total_fare"] as? String else { print("failed ppa_total"); return}
                 
                 
-                self.flightData.append(FlightData(fn: aircraft + operating_airline, fd: depart_at, ftp: totalPrice, fpp: ppa_total, ft: ppa_tax, fde: destination, frg: origin, fdt: destination, frgt: origin))
+                self.flightData.append(FlightData(fn: operating_airline + aircraft, fd: depart_at, ftp: totalPrice, fpp: ppa_total, ft: ppa_tax, fde: destination, frg: origin, fdt: destination, frgt: origin))
             }
         }
-//        if self.activityind.isAnimating{
-//
-//            DispatchQueue.main.sync(){
-//
-//                print("it's animating")
-//                self.activityind.stopAnimating()
-//                UIApplication.shared.endIgnoringInteractionEvents()
-//                self.performSegue(withIdentifier: "goToAR", sender: self)
-//            }
-//        }
         task.resume()
         return
     }

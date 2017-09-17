@@ -30,7 +30,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the scene to the view
         sceneView.scene = scene
-        
+        print("Count is \(flightData.count)")
         addNodes()
     }
     
@@ -52,9 +52,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
         //        sceneView.scene.rootNode.addChildNode(cubeNode)
         //
-        
-        let startNode = createNewBubbleParentNode("Start City")
-        let endNode = createNewBubbleParentNode("End City")
+        let orgCity = flightData[0].flightOrig
+        let destCity = flightData[0].flightDest
+        let startNode = createNewBubbleParentNode("Start City: " + orgCity)
+        let endNode = createNewBubbleParentNode("End City:" + destCity)
         startNode.position = SCNVector3(0, 0, 0)
         endNode.position = SCNVector3(0, 0, -1.2)
         sceneView.scene.rootNode.addChildNode(startNode)
