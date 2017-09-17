@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56868C2B1F6E47230021FB22 /* searchInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56868C2A1F6E47230021FB22 /* searchInfoVC.swift */; };
 		FC5849C61F6E3642000F5137 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5849C51F6E3642000F5137 /* AppDelegate.swift */; };
 		FC5849C81F6E3642000F5137 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = FC5849C71F6E3642000F5137 /* art.scnassets */; };
 		FC5849CA1F6E3642000F5137 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5849C91F6E3642000F5137 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56868C2A1F6E47230021FB22 /* searchInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchInfoVC.swift; sourceTree = "<group>"; };
 		FC5849C21F6E3642000F5137 /* TravelAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC5849C51F6E3642000F5137 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC5849C71F6E3642000F5137 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				FC5849C51F6E3642000F5137 /* AppDelegate.swift */,
 				FC5849C71F6E3642000F5137 /* art.scnassets */,
 				FC5849C91F6E3642000F5137 /* ViewController.swift */,
+				56868C2A1F6E47230021FB22 /* searchInfoVC.swift */,
 				FC5849CB1F6E3642000F5137 /* Main.storyboard */,
 				FC5849CE1F6E3642000F5137 /* Assets.xcassets */,
 				FC5849D01F6E3642000F5137 /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56868C2B1F6E47230021FB22 /* searchInfoVC.swift in Sources */,
 				FC5849CA1F6E3642000F5137 /* ViewController.swift in Sources */,
 				FC5849C61F6E3642000F5137 /* AppDelegate.swift in Sources */,
 			);

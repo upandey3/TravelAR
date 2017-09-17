@@ -42,12 +42,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func addNode() {
         
-        //let zCoords = randomFloat(min: -2, max: -0.2)
-        let cubeNode = SCNNode(geometry: SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0))
-        cubeNode.
-        let cc = getCameraCoordinates(sceneView: sceneView)
-        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
-        sceneView.scene.rootNode.addChildNode(cubeNode)
+//        //let zCoords = randomFloat(min: -2, max: -0.2)
+//        let cubeNode = SCNNode(geometry: SCNBox(width: 0.05, height: 0.05, length: 0.05, chamferRadius: 0))
+//     //   cubeNode.
+//    //    let cc = getCameraCoordinates(sceneView: sceneView)
+//        cubeNode.position = SCNVector3(cc.x, cc.y, cc.z)
+//        sceneView.scene.rootNode.addChildNode(cubeNode)
         
     }
     

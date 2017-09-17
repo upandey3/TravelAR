@@ -1,17 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A278a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7jG-Qe-c2f">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Search InfoVC-->
+        <scene sceneID="V4I-CO-hRl">
+            <objects>
+                <viewController id="7jG-Qe-c2f" customClass="searchInfoVC" customModule="TravelAR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cVv-sg-Han">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="253" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Destinatino" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aRz-I2-L5D">
+                                <rect key="frame" x="26" y="166" width="132" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="755" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Depart Date: XXXX-XX-XX" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0lr-b7-RrC">
+                                <rect key="frame" x="26" y="204" width="185" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="254" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Origin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hdP-lM-bB4">
+                                <rect key="frame" x="26" y="128" width="98" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search for Flights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqP-2K-ltI">
+                                <rect key="frame" x="85" y="65" width="205" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vky-MF-aVK">
+                                <rect key="frame" x="150" y="310" width="75" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitPressed:" destination="7jG-Qe-c2f" eventType="touchUpInside" id="hRv-04-OgW"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" identifier="goToAR" id="Dxz-re-kG2"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Return Date: XXXX-XX-XX" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yyT-N7-4Ga">
+                                <rect key="frame" x="26" y="242" width="185" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Q58-wz-sMQ" firstAttribute="bottom" secondItem="vky-MF-aVK" secondAttribute="bottom" constant="319" id="2wm-3m-CNB"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="leading" secondItem="Q58-wz-sMQ" secondAttribute="leading" constant="26" id="4NR-j7-QMy"/>
+                            <constraint firstItem="Q58-wz-sMQ" firstAttribute="trailing" secondItem="nqP-2K-ltI" secondAttribute="trailing" constant="85" id="8cL-F1-1dF"/>
+                            <constraint firstItem="nqP-2K-ltI" firstAttribute="top" secondItem="Q58-wz-sMQ" secondAttribute="top" constant="45" id="HOh-cN-hbh"/>
+                            <constraint firstItem="0lr-b7-RrC" firstAttribute="top" secondItem="aRz-I2-L5D" secondAttribute="bottom" constant="8" id="U2s-6B-nPC"/>
+                            <constraint firstItem="vky-MF-aVK" firstAttribute="leading" secondItem="Q58-wz-sMQ" secondAttribute="leading" constant="150" id="WUH-OH-BVU"/>
+                            <constraint firstItem="Q58-wz-sMQ" firstAttribute="trailing" secondItem="vky-MF-aVK" secondAttribute="trailing" constant="150" id="YXg-KI-KKG"/>
+                            <constraint firstItem="nqP-2K-ltI" firstAttribute="leading" secondItem="Q58-wz-sMQ" secondAttribute="leading" constant="85" id="Zq6-Wc-3GZ"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="trailing" secondItem="0lr-b7-RrC" secondAttribute="trailing" id="e7L-np-Ldf"/>
+                            <constraint firstItem="hdP-lM-bB4" firstAttribute="top" secondItem="nqP-2K-ltI" secondAttribute="bottom" constant="31" id="g1n-tv-eX4"/>
+                            <constraint firstItem="hdP-lM-bB4" firstAttribute="leading" secondItem="Q58-wz-sMQ" secondAttribute="leading" constant="26" id="iJs-sx-M4c"/>
+                            <constraint firstItem="Q58-wz-sMQ" firstAttribute="trailing" secondItem="hdP-lM-bB4" secondAttribute="trailing" constant="251" id="k3b-rU-Kli"/>
+                            <constraint firstItem="aRz-I2-L5D" firstAttribute="top" secondItem="hdP-lM-bB4" secondAttribute="bottom" constant="8" id="lkI-5F-evd"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="leading" secondItem="0lr-b7-RrC" secondAttribute="leading" id="mWS-Ie-ziy"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="leading" secondItem="hdP-lM-bB4" secondAttribute="leading" id="tRE-zQ-jX9"/>
+                            <constraint firstItem="Q58-wz-sMQ" firstAttribute="trailing" secondItem="yyT-N7-4Ga" secondAttribute="trailing" constant="164" id="uer-wh-V7t"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="leading" secondItem="aRz-I2-L5D" secondAttribute="leading" id="ydY-Uk-0e7"/>
+                            <constraint firstItem="yyT-N7-4Ga" firstAttribute="top" secondItem="0lr-b7-RrC" secondAttribute="bottom" constant="8" symbolic="YES" id="zIN-88-oEP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Q58-wz-sMQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="arrivalDate" destination="yyT-N7-4Ga" id="qcT-mS-4n7"/>
+                        <outlet property="departDate" destination="0lr-b7-RrC" id="xgg-Kh-hWq"/>
+                        <outlet property="destinationText" destination="aRz-I2-L5D" id="iij-Ql-2f4"/>
+                        <outlet property="originText" destination="hdP-lM-bB4" id="8R5-4k-DCR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nIL-ry-36w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-900" y="55"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="TravelAR" customModuleProvider="target" sceneMemberID="viewController">
                     <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -22,6 +105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-26" y="56"/>
         </scene>
     </scenes>
 </document>
