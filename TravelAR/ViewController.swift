@@ -93,15 +93,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             else if i == 4 {
                 edgeBox.firstMaterial?.diffuse.contents = UIColor.red
             }
+            else {
+                edgeBox.firstMaterial?.diffuse.contents = UIColor.green
+            }
  
             
             let edgeNode = SCNNode(geometry: edgeBox)
-            edgeNode.position = SCNVector3(0, 0, Double(i)/5)
-            let priceNode = createNewBubbleParentNode(fPrice)
+            edgeNode.position = SCNVector3(0, 0, -Double(i)/5)
+            let priceNode = createNewBubbleParentNode("$"+fPrice)
             let nameNode = createNewBubbleParentNode(fName)
-            priceNode.position = SCNVector3(0, 0.05, Double(i)/5)
+            priceNode.position = SCNVector3(0, 0.05, 0.1)
             edgeNode.addChildNode(priceNode)
-            nameNode.position = SCNVector3(0, 0.15, Double(i)/5)
+            nameNode.position = SCNVector3(0, 0.15, 0.1)
             edgeNode.addChildNode(nameNode)
             sceneView.scene.rootNode.addChildNode(edgeNode)
         }
